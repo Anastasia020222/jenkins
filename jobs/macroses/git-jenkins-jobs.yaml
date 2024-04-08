@@ -1,0 +1,39 @@
+- scm:
+    name: git-ui-tests
+    scm:
+      - git:
+          url: git@github.com:Anastasia020222/course-otus-web-test.git
+          credentials-id: jenkins
+          branches:
+            - FETCH_HEAD
+          refspec: $(BRANCH)
+
+- scm:
+    name: git-api-tests
+    scm:
+      - git:
+          url: git@github.com:Anastasia020222/course-otus-api-test.git
+          credentials-id: jenkins
+          branches:
+            - FETCH_HEAD
+          refspec: $(BRANCH)
+
+- scm:
+    name: git-mobile-tests
+    scm:
+      - git:
+          url: git@github.com:Anastasia020222/course-otus-appium-test.git
+          credentials-id: jenkins
+          branches:
+            - FETCH_HEAD
+          refspec: $(BRANCH)
+
+- scm:
+    name: git-runner
+    scm:
+      - git:
+          url: git@github.com:Anastasia020222/jenkins.git
+          credentials-id: jenkins
+          branches:
+            - FETCH_HEAD
+          refspec: $(BRANCH)

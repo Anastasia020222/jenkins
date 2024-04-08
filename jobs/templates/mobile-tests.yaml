@@ -1,0 +1,25 @@
+- job-template:
+    name: 'mobile-tests'
+    description: 'mobile-tests job'
+    project-type: pipeline
+    concurrent: true
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: BRANCH
+          default: master
+          description: Branch for tempest barbican MOBILE tests
+      - string:
+          name: PLATFORM_NAME
+          default: android
+          description: Platform name
+      - string:
+          name: PLATFORM_VERSION
+          default: 5.1
+          description: Mobile device version
+    pipeline-scm:
+      scm:
+        - git-mobile-tests
+      script-path: jenkins/mobile-tests.groovy

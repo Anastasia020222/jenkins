@@ -1,0 +1,7 @@
+- project:
+    name: 'autotests'
+    jobs:
+      - 'ui-tests'
+      - 'api-tests'
+      - 'mobile-tests'
+      - 'runner-tests'

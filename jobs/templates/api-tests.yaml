@@ -1,0 +1,25 @@
+- job-template:
+    name: 'api-tests'
+    description: 'api-tests job'
+    project-type: pipeline
+    concurrent: true
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: BRANCH
+          default: master
+          description: Branch for tempest barbican API tests
+      - string:
+          name: BASE_URL
+          default: https://petstore.swagger.io/v2
+          description: Base url
+      - string:
+          name: WIREMOCK_URL
+          default: http://localhost:8092
+          description: Wiremock url
+    pipeline-scm:
+      scm:
+        - git-api-tests
+      script-path: jenkins/api-tests.groovy

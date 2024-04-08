@@ -1,0 +1,19 @@
+- view:
+    name: QA
+    view-type: list
+    description: QA
+    filter-executor: true
+    filter-queue: true
+    job-name:
+      - 'ui-tests'
+      - 'api-tests'
+      - 'mobile-tests'
+      - 'runner-tests'
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button

@@ -1,0 +1,29 @@
+- job-template:
+    name: 'ui-tests'
+    description: 'ui-tests job'
+    project-type: pipeline
+    concurrent: true
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: BRANCH
+          default: master
+          description: Branch for tempest barbican UI tests
+      - string:
+          name: BASE_URL
+          default: https://otus.ru
+          description: Base url
+      - string:
+          name: BROWSER
+          default: chrome
+          description: Browser name
+      - string:
+          name: BROWSER_VERSION
+          default: 121.0
+          description: Browser version
+    pipeline-scm:
+      scm:
+        - git-ui-tests
+      script-path: jenkins/ui-tests.groovy
