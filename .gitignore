@@ -1,0 +1,7 @@
+target
+.idea
+.lib
+*.iml
+.DS_Store
+build
+out
