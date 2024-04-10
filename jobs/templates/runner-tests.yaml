@@ -7,6 +7,9 @@
       - build-discarder:
           num-to-keep: 10
     parameters:
+      - string:
+          name: TEST_TYPES
+          default: ui-tests
       - text:
           name: YAML_CONFIG
           default: |
