@@ -9,7 +9,7 @@
     parameters:
       - string:
           name: BRANCH
-          default: master
+          default: main
           description: Branch for tempest barbican UI tests
       - string:
           name: BASE_URL

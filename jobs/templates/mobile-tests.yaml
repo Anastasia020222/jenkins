@@ -9,7 +9,7 @@
     parameters:
       - string:
           name: BRANCH
-          default: master
+          default: main
           description: Branch for tempest barbican MOBILE tests
       - string:
           name: PLATFORM_NAME

@@ -6,7 +6,7 @@ timeout(60) {
                 Branch : $REFSPEC
             """
 
-            config = readYaml text: env.YAML_CONFIG
+            config = readYaml text: env.YAML_CONFIG ?: null
 
             //чтение yaml конфига если он есть
             if (config != null) {

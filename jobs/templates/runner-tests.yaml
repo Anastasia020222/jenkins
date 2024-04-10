@@ -1,0 +1,23 @@
+- job-template:
+    name: 'runner-tests'
+    description: 'runner-tests job'
+    project-type: pipeline
+    concurrent: true
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - text:
+          name: YAML_CONFIG
+          default: |
+            BASE_URL: https://otus.ru
+            BROWSER_NAME: chrome
+            BROWSER_VERSION: 121.0
+      - string:
+          name: BRANCH
+          default: master
+          description: Branch for tempest barbican RUNNER tests
+    pipeline-scm:
+      scm:
+        - git-ui-tests
+      script-path: runner/runner-tests.groovy

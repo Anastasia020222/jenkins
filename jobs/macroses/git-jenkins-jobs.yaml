@@ -6,34 +6,34 @@
           credentials-id: jenkins
           branches:
             - FETCH_HEAD
-          refspec: $(BRANCH)
+          refspec: ${BRANCH}
 
 - scm:
     name: git-api-tests
     scm:
       - git:
           url: git@github.com:Anastasia020222/course-otus-api-test.git
-          credentials-id: jenkins
+          credentials-id: 5a515815-83d0-46bf-8bfb-0a19ac4a4a44
           branches:
             - FETCH_HEAD
-          refspec: $(BRANCH)
+          refspec: ${BRANCH}
 
 - scm:
     name: git-mobile-tests
     scm:
       - git:
           url: git@github.com:Anastasia020222/course-otus-appium-test.git
-          credentials-id: jenkins
+          credentials-id: 5a515815-83d0-46bf-8bfb-0a19ac4a4a44
           branches:
             - FETCH_HEAD
-          refspec: $(BRANCH)
+          refspec: ${BRANCH}
 
 - scm:
     name: git-runner
     scm:
       - git:
           url: git@github.com:Anastasia020222/jenkins.git
-          credentials-id: jenkins
+          credentials-id: 5a515815-83d0-46bf-8bfb-0a19ac4a4a44
           branches:
             - FETCH_HEAD
-          refspec: $(BRANCH)
+          refspec: ${BRANCH}

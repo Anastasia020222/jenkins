@@ -1,6 +1,6 @@
-FROM jenkins/slave:alpine
+FROM jenkins/agent
 
 USER root
 
-RUN apk upgrade \
-    && apk add maven
+RUN apt-get update -y
+RUN apt-get install maven -y
