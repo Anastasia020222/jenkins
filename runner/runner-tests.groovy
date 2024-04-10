@@ -26,7 +26,7 @@ timeout(60) {
     //объекты джоб
     for (type in testType) {
         jobs[type] = {
-            node("maven") {
+            node("maven-slave") {
                 stage("Running $type tests")
                 triggerJobs[type] = build(job: "$type-tests", parameters: [
                         text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
