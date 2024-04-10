@@ -10,7 +10,7 @@ timeout(60) {
 
             //чтение yaml конфига если он есть
             if (config != null) {
-                for (param in config.entrySer()) {
+                for (param in config.entrySet()) {
                     env.setProperty(param.getKey(), param.getValue())
                 }
             }
