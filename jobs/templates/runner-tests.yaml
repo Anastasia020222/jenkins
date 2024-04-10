@@ -19,5 +19,5 @@
           description: Branch for tempest barbican RUNNER tests
     pipeline-scm:
       scm:
-        - git-ui-tests
+        - git-runner
       script-path: runner/runner-tests.groovy
