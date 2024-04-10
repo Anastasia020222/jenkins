@@ -17,7 +17,7 @@ timeout(60) {
         }
 
         //получение списка типов теста (гет проперти прочитает как строку)
-        testType = env.getProperty('TEST_TYPES').replaceAll("[", "").replace("]", "").split(",\\s*")
+        testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
     }
 
     def jobs = [:]
