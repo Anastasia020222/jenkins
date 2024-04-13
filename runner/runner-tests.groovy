@@ -46,7 +46,7 @@ timeout(60) {
         stage("Copy allure reports") {
             dir("allure-results") {
                 for (type in testType) {
-                    copyArtifacts filter: "allure-report.zip", projectName: "${triggerdJobs[type].projectName}", selector: lastSuccessful(), optional: true
+                    copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].projectName}", selector: lastSuccessful(), optional: true
                     sh "unzip ./allure-report.zip -d ."
                     sh "rm -rf ./allure-report.zip"
                 }
