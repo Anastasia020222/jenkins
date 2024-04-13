@@ -14,54 +14,51 @@ timeout(60) {
                     env.setProperty(param.getKey(), param.getValue())
                 }
             }
+            //получение списка типов теста (гет проперти прочитает как строку)
+            testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
         }
 
-        //получение списка типов теста (гет проперти прочитает как строку)
-        testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
-    }
+        def jobs = [:]
+        def triggerJobs = [:]
 
-    def jobs = [:]
-    def triggerJobs = [:]
-
-    //объекты джоб
-    for (type in testType) {
-        jobs[type] = {
-            node("maven-slave") {
-                stage("Running $type")
-                triggerJobs[type] = build(job: "$type", parameters: [
-                        text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
-                ])
+        //объекты джоб
+        for (type in testType) {
+            jobs[type] = {
+                node("maven-slave") {
+                    stage("Running $type")
+                    triggerJobs[type] = build(job: "$type", parameters: [
+                            text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
+                    ])
+                }
             }
         }
-    }
-    parallel jobs
+        parallel jobs
 
-    //формирование enviroments.txt - это файл, в котором рисуется enviroment (переменные окружения)
-    stage("Create additional allure report artifacts") { //enviroment в отчете
-        node("maven-slave") {
+        //формирование enviroments.txt - это файл, в котором рисуется enviroment (переменные окружения)
+        stage("Create additional allure report artifacts") { //enviroment в отчете
             sh "echo TEST_VERSION=${env.getProperty('TEST_VERSION')} > enviroments.txt"
             sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
         }
-    }
 
-    //копирование артефактов selector - выборка джобы - получение последней выполненной, optional - если не найдет артефакт, то стейдж не зафейлит
-    stage("Copy allure reports") {
-        dir("allure-results") {
-            for (type in testType) {
-                copyArtifacts filter: "allure-report.zip", projectName: "${triggerdJobs[type].projectName}", selector: lastSuccessful(), optional: true
-                sh "unzip ./allure-report.zip -d ."
-                sh "rm -rf ./allure-report.zip"
+        //копирование артефактов selector - выборка джобы - получение последней выполненной, optional - если не найдет артефакт, то стейдж не зафейлит
+        stage("Copy allure reports") {
+            dir("allure-results") {
+                for (type in testType) {
+                    copyArtifacts filter: "allure-report.zip", projectName: "${triggerdJobs[type].projectName}", selector: lastSuccessful(), optional: true
+                    sh "unzip ./allure-report.zip -d ."
+                    sh "rm -rf ./allure-report.zip"
+                }
             }
         }
-    }
 
-    //публикация отчета для всех прогов
-    stage("Publish allure reports") {
-        dir("allure-results") {
-            allure([
-                    results          : [[path : './reports']],
-                    reportBuildPolicy: ALWAYS
-            ])
+        //публикация отчета для всех прогов
+        stage("Publish allure reports") {
+            dir("allure-results") {
+                allure([
+                        results          : [[path: './reports']],
+                        reportBuildPolicy: ALWAYS
+                ])
+            }
         }
     }
 }
