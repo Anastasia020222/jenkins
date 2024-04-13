@@ -38,8 +38,10 @@ timeout(60) {
 
     //формирование enviroments.txt - это файл, в котором рисуется enviroment (переменные окружения)
     stage("Create additional allure report artifacts") { //enviroment в отчете
-        sh "echo TEST_VERSION=${env.getProperty('TEST_VERSION')} > enviroments.txt"
-        sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
+        node("maven-slave") {
+            sh "echo TEST_VERSION=${env.getProperty('TEST_VERSION')} > enviroments.txt"
+            sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
+        }
     }
 
     //копирование артефактов selector - выборка джобы - получение последней выполненной, optional - если не найдет артефакт, то стейдж не зафейлит
