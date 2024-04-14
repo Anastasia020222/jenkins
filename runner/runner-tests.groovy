@@ -1,3 +1,6 @@
+def jobs = [:]
+def triggerJobs = [:]
+
 timeout(60) {
     node("maven-slave") {
         wrap([$class: 'BuildUser']) {
@@ -17,9 +20,6 @@ timeout(60) {
             //получение списка типов теста (гет проперти прочитает как строку)
             testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
         }
-
-        def jobs = [:]
-        def triggerJobs = [:]
 
         //объекты джоб
         try {
