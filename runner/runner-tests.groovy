@@ -92,6 +92,7 @@ def copyAllureReport() {
         dir("allure-results") {
             for (type in testType) {
                 sh "pwd"
+                println(triggerJobs[type])
                 copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].projectName}", selector: lastSuccessful(), optional: true
                 sh "ls -a"
                 sh "unzip ./allure-report.zip -d ."
