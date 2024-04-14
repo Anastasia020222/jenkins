@@ -1,6 +1,7 @@
 
 jobs = [:]
 triggerJobs = [:]
+def testType
 
 timeout(60) {
     node("maven-slave") {
@@ -20,6 +21,7 @@ timeout(60) {
             }
             //получение списка типов теста (гет проперти прочитает как строку)
             testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
+            println(testType)
         }
 
         //объекты джоб
@@ -28,10 +30,11 @@ timeout(60) {
                 jobs[type] = {
                     node("maven-slave") {
                         stage("Running $type") {
-                            println(type)
+                            println(testType)
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
+                            println(triggerJobs.toString())
                         }
                     }
                 }
