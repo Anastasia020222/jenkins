@@ -25,17 +25,18 @@ timeout(60) {
         for (type in testType) {
             jobs[type] = {
                 node("maven-slave") {
-                    stage("Running $type")
-                    triggerJobs[type] = build(job: "$type", parameters: [
-                            text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
-                    ])
+                    stage("Running $type") {
+                        triggerJobs[type] = build(job: "$type", parameters: [
+                                text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
+                        ])
+                    }
                 }
             }
         }
         parallel jobs
 
-        //формирование enviroments.txt - это файл, в котором рисуется enviroment (переменные окружения)
-        stage("Create additional allure report artifacts") { //enviroment в отчете
+        //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
+        stage("Create additional allure report artifacts") { //environment в отчете
             dir("allure-results") {
                 sh "echo TEST_VERSION=${env.getProperty('TEST_VERSION')} > enviroments.txt"
                 sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
@@ -55,12 +56,23 @@ timeout(60) {
 
         //публикация отчета для всех прогов
         stage("Publish allure reports") {
-            dir("allure-results") {
-                allure([
-                        reportBuildPolicy: 'ALWAYS',
-                        results          : [[path: './target/allure-result']]
-                ])
-            }
+            allure([
+                    includeProperties: false,
+                    jdk              : '',
+                    reportBuildPolicy: 'ALWAYS',
+                    results          : [[path: 'target/allure-results']]
+            ])
+        }
+    }
+}
+
+def environmentsCreate() {
+    //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
+    stage("Create additional allure report artifacts") { //environment в отчете
+        dir("allure-results") {
+            sh "echo TEST_VERSION=${env.getProperty('TEST_VERSION')} > enviroments.txt"
+            sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
+
         }
     }
 }
