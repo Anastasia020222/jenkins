@@ -26,6 +26,7 @@ timeout(60) {
             for (type in testType) {
                 jobs[type] = {
                     node("maven-slave") {
+                        sh "jobs"
                         stage("Running $type") {
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
@@ -79,9 +80,9 @@ def environmentsCreate() {
     //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
     stage("Create additional allure report artifacts") { //environment в отчете
         dir("allure-results") {
-            sh "echo TEST_VERSION=${env.getProperty('TEST_VERSION')} > enviroments.txt"
+            sh "echo BASE_URL=${env.getProperty('BASE_URL')} > enviroments.txt"
             sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
-
+            sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> enviroments.txt"
         }
     }
 }
@@ -90,9 +91,9 @@ def copyAllureReport() {
     stage("Copy allure reports") {
         dir("allure-results") {
             for (type in testType) {
-                sh(pwd)
+                sh "pwd"
                 copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].projectName}", selector: lastSuccessful(), optional: true
-                sh(ls -a)
+                sh "ls -a"
                 sh "unzip ./allure-report.zip -d ."
                 sh "rm -rf ./allure-report.zip"
             }
