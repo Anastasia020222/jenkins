@@ -32,14 +32,14 @@ timeout(60) {
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
-                            println("triggerJobs" + triggerJobs.getProjectName())
+                            println("triggerJobs" + triggerJobs[type].getProjectName())
                         }
                     }
                 }
             }
             parallel jobs
         } finally {
-            println("triggerJobs" + triggerJobs.getProjectName())
+            println("triggerJobs" + triggerJobs.toString())
             environmentsCreate()
             copyAllureReport()
         }
