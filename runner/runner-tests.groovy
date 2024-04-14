@@ -1,7 +1,6 @@
 
 jobs = [:]
 triggerJobs = [:]
-def testType
 
 timeout(60) {
     node("maven-slave") {
@@ -21,7 +20,6 @@ timeout(60) {
             }
             //получение списка типов теста (гет проперти прочитает как строку)
             testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
-            println(testType)
         }
 
         //объекты джоб
@@ -30,18 +28,18 @@ timeout(60) {
                 jobs[type] = {
                     node("maven-slave") {
                         stage("Running $type") {
-                            println(testType)
+                            println(testType.toString())
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
-                            println("triggerJobs" + triggerJobs.toString())
+                            println("triggerJobs" + triggerJobs.getProjectName())
                         }
                     }
                 }
             }
             parallel jobs
         } finally {
-            println("triggerJobs" + triggerJobs.toString())
+            println("triggerJobs" + triggerJobs.getProjectName())
             environmentsCreate()
             copyAllureReport()
         }
@@ -99,8 +97,8 @@ def copyAllureReport() {
                 sh "pwd"
                 println(testType.toString())
                 println(type)
-                println(triggerJobs.toString())
-                copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].projectName}", selector: lastSuccessful(), optional: true
+                println(triggerJobs.getProjectName())
+                copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].getProjectName()}", selector: lastSuccessful(), optional: true
                 sh "ls -a"
                 sh "unzip ./allure-report.zip -d ."
                 sh "rm -rf ./allure-report.zip"
