@@ -1,5 +1,6 @@
-def jobs = [:]
-def triggerJobs = [:]
+
+jobs = [:]
+triggerJobs = [:]
 
 timeout(60) {
     node("maven-slave") {
@@ -26,7 +27,6 @@ timeout(60) {
             for (type in testType) {
                 jobs[type] = {
                     node("maven-slave") {
-                        sh "jobs"
                         stage("Running $type") {
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
