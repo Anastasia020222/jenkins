@@ -28,6 +28,7 @@ timeout(60) {
                 jobs[type] = {
                     node("maven-slave") {
                         stage("Running $type") {
+                            println(type)
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
@@ -35,6 +36,7 @@ timeout(60) {
                     }
                 }
             }
+            println(triggerJobs)
             parallel jobs
         } finally {
             environmentsCreate()
@@ -92,7 +94,9 @@ def copyAllureReport() {
         dir("allure-results") {
             for (type in testType) {
                 sh "pwd"
-                println(triggerJobs[type])
+                println(testType)
+                println(type)
+                println(triggerJobs)
                 copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].projectName}", selector: lastSuccessful(), optional: true
                 sh "ls -a"
                 sh "unzip ./allure-report.zip -d ."
