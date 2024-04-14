@@ -26,7 +26,6 @@ timeout(60) {
             jobs[type] = {
                 node("maven-slave") {
                     stage("Running $type") {
-                        sh (jobs)
                         triggerJobs[type] = build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
@@ -50,7 +49,6 @@ timeout(60) {
         stage("Copy allure reports") {
             dir("allure-results") {
                 for (type in testType) {
-                    sh(triggerJobs)
                     sh(pwd)
                     copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].projectName}", selector: lastSuccessful(), optional: true
                     sh(ls -a)
