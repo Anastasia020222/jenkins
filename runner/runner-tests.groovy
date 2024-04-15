@@ -24,7 +24,7 @@ timeout(60) {
         try {
             for (type in testType) {
                 jobs[type] = {
-                    printf("testType " + type)
+                    println("testType " + type)
                     stage("Running $type") {
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
