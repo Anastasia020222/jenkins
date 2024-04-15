@@ -64,10 +64,11 @@ timeout(60) {
                 dir("allure-results") {
                     sh("pwd")
                     sh("ls")
+                    sh("ls ./")
                     allure([
                             reportBuildPolicy: 'ALWAYS',
-                            report : "."
-//                            results          : [[path: '.']]
+                            report : "./",
+                            results          : [[path: '.']]
                     ])
                 }
             }
