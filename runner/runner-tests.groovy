@@ -33,13 +33,13 @@ timeout(60) {
                             ])
                         }
                         println("triggerJobs " + triggerJobs[type].getProjectName())
-                        println("result " + currentBuild.getPreviousBuild().result)
                     }
                 }
             }
             parallel jobs
         } finally {
-            println("triggerJobs" + triggerJobs.toString())
+            println("result " + currentBuild.getPreviousBuild().result)
+            println("triggerJobs " + triggerJobs.toString())
 
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
             stage("Create additional allure report artifacts") { //environment в отчете
