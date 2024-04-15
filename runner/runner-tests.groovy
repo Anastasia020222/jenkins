@@ -19,19 +19,16 @@ timeout(60) {
         }
 
         def jobs = [:]
-        def triggerJobs = [:]
 
         //объекты джоб
         try {
             for (type in testType) {
                 jobs[type] = {
-                    //node("maven-slave") {
-                        stage("Running $type") {
-                            build(job: "$type", parameters: [
-                                    text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
-                            ])
-                        }
-                    //}
+                    stage("Running $type") {
+                        build(job: "$type", parameters: [
+                                text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
+                        ])
+                    }
                 }
             }
             parallel jobs
@@ -64,42 +61,15 @@ timeout(60) {
 
             //публикация отчета для всех прогов
             stage("Publish allure reports") {
-                sh("pwd")
-                allure([
-                        includeProperties: false,
-                        jdk              : '',
-                        reportBuildPolicy: 'ALWAYS',
-                        results          : [[path: './allure-results']]
-                ])
+                dir("allure-results") {
+                    sh("pwd")
+                    sh("ls")
+                    allure([
+                            reportBuildPolicy: 'ALWAYS',
+                            results          : ['.']
+                    ])
+                }
             }
         }
     }
 }
-
-//def environmentsCreate() {
-//    //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
-//    stage("Create additional allure report artifacts") { //environment в отчете
-//        dir("allure-results") {
-//            sh "echo BASE_URL=${env.getProperty('BASE_URL')} > enviroments.txt"
-//            sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.txt"
-//            sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> enviroments.txt"
-//        }
-//    }
-//}
-//
-//def copyAllureReport() {
-//    stage("Copy allure reports") {
-//        dir("allure-results") {
-//            for (type in testType) {
-//                sh "pwd"
-//                println(triggerJobs[type].getProjectName())
-//                println(testType.toString())
-//                println(type)
-//                copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].getProjectName()}", selector: lastSuccessful(), optional: true
-//                sh "ls -a"
-//                sh "unzip ./allure-report.zip -d ."
-//                sh "rm -rf ./allure-report.zip"
-//            }
-//        }
-//    }
-//}
