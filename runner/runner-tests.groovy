@@ -24,6 +24,7 @@ timeout(60) {
         try {
             for (type in testType) {
                 jobs[type] = {
+                    printf("testType " + type)
                     stage("Running $type") {
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
@@ -38,6 +39,8 @@ timeout(60) {
             stage("Create additional allure report artifacts") { //environment в отчете
                 dir("allure-results") {
                     sh "echo BASE_URL=${env.getProperty('BASE_URL')} > environment.properties"
+                    sh "echo BASE_API_URL=${env.getProperty('BASE_API_URL')} >> environment.properties"
+                    sh "echo WIREMOCK_URL=${env.getProperty('WIREMOCK_URL')} >> environment.properties"
                     sh "echo BROWSER=${env.getProperty('BROWSER')} >> environment.properties"
                     sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> environment.properties"
                 }
@@ -49,7 +52,7 @@ timeout(60) {
                 dir("allure-results") {
                     for (type in testType) {
                         sh "pwd"
-                        sh "cp /root/allure/* ."
+                        sh "cp /root/" + type + "-allure/* ."
 //                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
 //                        sh "ls -a"
 //                        sh "unzip ./allure-report.zip -d ."

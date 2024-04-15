@@ -7,18 +7,15 @@
       - build-discarder:
           num-to-keep: 10
     parameters:
+      - text:
+          name: YAML_CONFIG
+          default: |
+            BASE_API_URL: https://petstore.swagger.io/v2
+            WIREMOCK_URL: http://172.30.207.187:8091
       - string:
           name: BRANCH
           default: main
-          description: Branch for tempest barbican API tests
-      - string:
-          name: BASE_URL
-          default: https://petstore.swagger.io/v2
-          description: Base url
-      - string:
-          name: WIREMOCK_URL
-          default: http://localhost:8092
-          description: Wiremock url
+          description: Branch for API tests
     pipeline-scm:
       scm:
         - git-api-tests

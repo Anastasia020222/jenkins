@@ -7,22 +7,17 @@
       - build-discarder:
           num-to-keep: 10
     parameters:
+      - text:
+          name: YAML_CONFIG
+          default: |
+            BASE_URL: https://otus.ru
+            BROWSER: chrome
+            VERSION_BROWSER: 121.0
+            REMOTE: true
       - string:
           name: BRANCH
           default: main
-          description: Branch for tempest barbican UI tests
-      - string:
-          name: BASE_URL
-          default: https://otus.ru
-          description: Base url
-      - string:
-          name: BROWSER
-          default: chrome
-          description: Browser name
-      - string:
-          name: BROWSER_VERSION
-          default: 121.0
-          description: Browser version
+          description: Branch for UI tesrs
     pipeline-scm:
       scm:
         - git-ui-tests
