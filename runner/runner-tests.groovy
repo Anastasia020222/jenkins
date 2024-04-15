@@ -51,7 +51,7 @@ timeout(60) {
                         sh "pwd"
                         println("testType " + testType.toString())
                         println("type " + type)
-                        println("text " + environment.properties)
+                        sh "cat environment.properties"
                         sh "cp /root/allure/* ."
 //                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
 //                        sh "ls -a"
