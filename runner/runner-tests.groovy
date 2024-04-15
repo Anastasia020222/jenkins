@@ -66,7 +66,8 @@ timeout(60) {
                     sh("ls")
                     allure([
                             reportBuildPolicy: 'ALWAYS',
-                            results          : [[path: '.']]
+                            report : "."
+//                            results          : [[path: '.']]
                     ])
                 }
             }
