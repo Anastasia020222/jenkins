@@ -49,9 +49,6 @@ timeout(60) {
                 dir("allure-results") {
                     for (type in testType) {
                         sh "pwd"
-                        println("testType " + testType.toString())
-                        println("type " + type)
-                        sh "cat environment.properties"
                         sh "cp /root/allure/* ."
 //                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
 //                        sh "ls -a"
@@ -62,14 +59,12 @@ timeout(60) {
                 }
             }
 
-            //публикация отчета для всех прогов
+            //публикация отчета для всех прогонов
             stage("Publish allure reports") {
-                    sh("pwd")
-                    sh("ls")
-                    allure([
-                            results          : [[path: './allure-results']],
-                            reportBuildPolicy: 'ALWAYS'
-                    ])
+                allure([
+                        results          : [[path: './allure-results']],
+                        reportBuildPolicy: 'ALWAYS'
+                ])
             }
         }
     }
