@@ -48,6 +48,7 @@ timeout(60) {
             stage("Copy allure reports") {
                 dir("allure-results") {
                     for (type in testType) {
+                        sh "cat environment.xml"
                         sh "pwd"
                         println("testType " + testType.toString())
                         println("type " + type)
