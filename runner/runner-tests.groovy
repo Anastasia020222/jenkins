@@ -23,10 +23,12 @@ timeout(60) {
         //объекты джоб
         try {
             println("testType " + testType)
-            for (def type in testType) {
+            for (type in testType) {
+                println("type " + type)
                 jobs[type] = {
-                    println("type " + type)
+                    println(jobs)
                     stage("Running $type") {
+                        sh "env"
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
