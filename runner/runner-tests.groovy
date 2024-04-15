@@ -67,8 +67,8 @@ timeout(60) {
                     sh("ls ./")
                     allure([
                             reportBuildPolicy: 'ALWAYS',
-                            report : "./",
-                            results          : [[path: '.']]
+                            report : ".",
+                            results          : [[path: '/home/jenkins/workspace/runner-tests/allure-results']]
                     ])
                 }
             }
