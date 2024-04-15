@@ -51,10 +51,12 @@ timeout(60) {
                         sh "pwd"
                         println("testType " + testType.toString())
                         println("type " + type)
-                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
+                        sh "cp /root/allure/* ."
+//                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
+//                        sh "ls -a"
+//                        sh "unzip ./allure-report.zip -d ."
+//                        sh "rm -rf ./allure-report.zip"
                         sh "ls -a"
-                        sh "unzip ./allure-report.zip -d ."
-                        sh "rm -rf ./allure-report.zip"
                     }
                 }
             }
