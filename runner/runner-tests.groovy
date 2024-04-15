@@ -1,6 +1,6 @@
 
 jobs = [:]
-triggerJobs = [:]
+def triggerJobs = [:]
 
 timeout(60) {
     node("maven-slave") {
@@ -32,7 +32,7 @@ timeout(60) {
                             triggerJobs[type] = build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
-                            println("triggerJobs" + triggerJobs[type].getProjectName())
+                            println("triggerJobs " + triggerJobs[type].getProjectName())
                         }
                     }
                 }
@@ -95,6 +95,7 @@ def copyAllureReport() {
         dir("allure-results") {
             for (type in testType) {
                 sh "pwd"
+                println(triggerJobs[type].getProjectName())
                 println(testType.toString())
                 println(type)
                 copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].getProjectName()}", selector: lastSuccessful(), optional: true
