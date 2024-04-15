@@ -61,16 +61,12 @@ timeout(60) {
 
             //публикация отчета для всех прогов
             stage("Publish allure reports") {
-                dir("allure-results") {
-                    sh("pwd")
-                    sh("ls")
-                    sh("ls ./")
-                    allure([
-                            reportBuildPolicy: 'ALWAYS',
-                            report : ".",
-                            results          : [[path: '/home/jenkins/workspace/runner-tests/allure-results']]
-                    ])
-                }
+                sh("pwd")
+                sh("ls")
+                allure([
+                        reportBuildPolicy: 'ALWAYS',
+                        results          : [[path: './allure-results']]
+                ])
             }
         }
     }
