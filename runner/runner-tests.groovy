@@ -60,16 +60,16 @@ timeout(60) {
             }
 
             //публикация отчета для всех прогов
-            stage("Publish allure reports") {
-                dir("allure-results") {
-                    sh("pwd")
-                    sh("ls")
-                    allure([
-                            results          : [[path: 'allure-report']],
-                            reportBuildPolicy: 'ALWAYS'
-                    ])
-                }
-            }
+//            stage("Publish allure reports") {
+//                dir("allure-results") {
+//                    sh("pwd")
+//                    sh("ls")
+//                    allure([
+//                            results          : [[path: '.']],
+//                            reportBuildPolicy: 'ALWAYS'
+//                    ])
+//                }
+//            }
         }
     }
 }
