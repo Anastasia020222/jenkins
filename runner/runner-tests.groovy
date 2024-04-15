@@ -25,13 +25,13 @@ timeout(60) {
         try {
             for (type in testType) {
                 jobs[type] = {
-                    node("maven-slave") {
+                    //node("maven-slave") {
                         stage("Running $type") {
                             build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
                         }
-                    }
+                    //}
                 }
             }
             parallel jobs
@@ -46,6 +46,8 @@ timeout(60) {
                 }
             }
 
+            //копирование артефактов, selector - выборка джобы - получение последней выполненной,
+            //optional - если не найдет артефакт, то стейдж не зафейлит
             stage("Copy allure reports") {
                 dir("allure-results") {
                     for (type in testType) {
@@ -62,11 +64,12 @@ timeout(60) {
 
             //публикация отчета для всех прогов
             stage("Publish allure reports") {
+                sh("pwd")
                 allure([
                         includeProperties: false,
                         jdk              : '',
                         reportBuildPolicy: 'ALWAYS',
-                        results          : [[path: 'allure-results']]
+                        results          : [[path: './allure-results']]
                 ])
             }
         }
