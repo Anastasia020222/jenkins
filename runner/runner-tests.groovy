@@ -61,12 +61,14 @@ timeout(60) {
 
             //публикация отчета для всех прогов
             stage("Publish allure reports") {
-                sh("pwd")
-                sh("ls")
-                allure([
-                        reportBuildPolicy: 'ALWAYS',
-                        results          : [[path: './allure-results']]
-                ])
+                dir("allure-results") {
+                    sh("pwd")
+                    sh("ls")
+                    allure([
+                            results          : [[path: 'allure-report']],
+                            reportBuildPolicy: 'ALWAYS'
+                    ])
+                }
             }
         }
     }
