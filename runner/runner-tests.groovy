@@ -37,9 +37,9 @@ timeout(60) {
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
             stage("Create additional allure report artifacts") { //environment в отчете
                 dir("allure-results") {
-                    sh "echo BASE_URL=${env.getProperty('BASE_URL')} > enviroments.xml"
-                    sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroments.xml"
-                    sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> enviroments.xml"
+                    sh "echo BASE_URL=${env.getProperty('BASE_URL')} > enviroment.xml"
+                    sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroment.xml"
+                    sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> enviroment.xml"
                 }
             }
 
