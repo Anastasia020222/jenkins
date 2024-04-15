@@ -27,19 +27,15 @@ timeout(60) {
                 jobs[type] = {
                     node("maven-slave") {
                         stage("Running $type") {
-                            println(testType.toString())
-                            triggerJobs[type] = build(job: "$type", parameters: [
+                            build(job: "$type", parameters: [
                                     text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                             ])
                         }
-                        println("triggerJobs " + triggerJobs[type].getProjectName())
                     }
                 }
             }
             parallel jobs
         } finally {
-            println("result " + currentBuild.getPreviousBuild().result)
-            println("triggerJobs " + triggerJobs.toString())
 
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
             stage("Create additional allure report artifacts") { //environment в отчете
@@ -54,10 +50,9 @@ timeout(60) {
                 dir("allure-results") {
                     for (type in testType) {
                         sh "pwd"
-                        println(triggerJobs[type].getProjectName())
-                        println(testType.toString())
-                        println(type)
-                        copyArtifacts filter: "allure-report.zip", projectName: "${triggerJobs[type].getProjectName()}", selector: lastSuccessful(), optional: true
+                        println("testType " + testType.toString())
+                        println("type " + type)
+                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
                         sh "ls -a"
                         sh "unzip ./allure-report.zip -d ."
                         sh "rm -rf ./allure-report.zip"
