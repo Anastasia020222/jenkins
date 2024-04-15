@@ -23,7 +23,7 @@ timeout(60) {
         //объекты джоб
         try {
             println("testType " + testType)
-            for (type in testType) {
+            for (def type in testType) {
                 jobs[type] = {
                     println("type " + type)
                     stage("Running $type") {
