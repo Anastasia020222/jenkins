@@ -37,9 +37,9 @@ timeout(60) {
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
             stage("Create additional allure report artifacts") { //environment в отчете
                 dir("allure-results") {
-                    sh "echo BASE_URL=${env.getProperty('BASE_URL')} > enviroment.xml"
-                    sh "echo BROWSER=${env.getProperty('BROWSER')} >> enviroment.xml"
-                    sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> enviroment.xml"
+                    sh "echo BASE_URL=${env.getProperty('BASE_URL')} > environment.properties"
+                    sh "echo BROWSER=${env.getProperty('BROWSER')} >> environment.properties"
+                    sh "echo VERSION_BROWSER=${env.getProperty('VERSION_BROWSER')} >> environment.properties"
                 }
             }
 
@@ -48,10 +48,10 @@ timeout(60) {
             stage("Copy allure reports") {
                 dir("allure-results") {
                     for (type in testType) {
-                        sh "cat environment.xml"
                         sh "pwd"
                         println("testType " + testType.toString())
                         println("type " + type)
+                        println("text " + environment.properties)
                         sh "cp /root/allure/* ."
 //                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
 //                        sh "ls -a"
