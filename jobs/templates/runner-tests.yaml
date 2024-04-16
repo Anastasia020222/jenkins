@@ -9,16 +9,28 @@
     parameters:
       - string:
           name: TEST_TYPES
-          default: ui-tests
+          default: ui-tests, api-tests, mobile-tests
       - text:
           name: YAML_CONFIG
           default: |
+            BASE_SELENOID_URL: http://172.30.207.187:8080
+
+            ui-tests:
             BASE_URL: https://otus.ru
-            BROWSER_NAME: chrome
-            BROWSER_VERSION: 121.0
+            BROWSER: chrome
+            VERSION_BROWSER: 121.0
+            REMOTE: true
+
+            api-tests:
+            BASE_API_URL: https://petstore.swagger.io/v2
+            WIREMOCK_URL: http://172.30.207.187:8091
+
+            mobile-tests:
+            PLATFORM_NAME: android
+            PLATFORM_VERSION: 5.1
       - string:
           name: BRANCH
-          default: master
+          default: main
           description: Branch for RUNNER tests
     pipeline-scm:
       scm:
