@@ -15,7 +15,7 @@ timeout(60) {
                 }
             }
             //получение списка типов теста (гет проперти прочитает как строку)
-            testType = env.getProperty('TEST_TYPES').replaceAll("\\[", "").replace("]", "").split(",\\s*")
+            testType = env.getProperty('TEST_TYPES').split(",\\s*")
         }
 
         def jobs = [:]
@@ -26,16 +26,18 @@ timeout(60) {
             for (type in testType) {
                 println("type " + type)
                 jobs[type] = {
-                    println(jobs)
+                    println("jobs[type] " + jobs[type])
+                    println("type " + type)
                     stage("Running $type") {
                         sh "env"
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
                     }
+                    parallel jobs
                 }
             }
-            parallel jobs
+            //parallel jobs
         } finally {
 
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
