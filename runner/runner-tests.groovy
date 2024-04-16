@@ -27,17 +27,16 @@ timeout(60) {
                 println("type " + type)
                 jobs[type] = {
                     println("jobs[type] " + jobs[type])
-                    println("type " + type)
+                    println("type 2 " + type)
                     stage("Running $type") {
                         sh "env"
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
                     }
-                    parallel jobs
                 }
+                parallel jobs
             }
-            //parallel jobs
         } finally {
 
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
