@@ -13,13 +13,12 @@
       - text:
           name: YAML_CONFIG
           default: |
-            BASE_SELENOID_URL: http://172.30.207.187:8080
+            BASE_SELENOID_URL: http://172.30.207.187:8080/wb/hub
 
             ui-tests:
             BASE_URL: https://otus.ru
             BROWSER: chrome
             VERSION_BROWSER: 121.0
-            REMOTE: true
 
             api-tests:
             BASE_API_URL: https://petstore.swagger.io/v2
