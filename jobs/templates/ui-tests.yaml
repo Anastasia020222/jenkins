@@ -17,7 +17,7 @@
       - string:
           name: BRANCH
           default: main
-          description: Branch for UI tesrs
+          description: Branch for UI tests
     pipeline-scm:
       scm:
         - git-ui-tests

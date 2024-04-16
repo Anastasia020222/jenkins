@@ -19,7 +19,7 @@
       - string:
           name: BRANCH
           default: master
-          description: Branch for tempest barbican RUNNER tests
+          description: Branch for RUNNER tests
     pipeline-scm:
       scm:
         - git-runner

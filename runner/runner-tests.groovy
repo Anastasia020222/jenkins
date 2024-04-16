@@ -14,7 +14,7 @@ timeout(60) {
                     env.setProperty(param.getKey(), param.getValue())
                 }
             }
-            //получение списка типов теста (гет проперти прочитает как строку)
+            //получение списка типов теста
             testType = env.getProperty('TEST_TYPES').split(",\\s*")
         }
 
@@ -22,15 +22,9 @@ timeout(60) {
 
         //объекты джоб
         try {
-            println("testType " + testType)
-            //for (type in testType) {
-            testType.each {type ->
-                println("type " + type)
+            testType.each { type ->
                 jobs[type] = {
-                    println("jobs[type] " + jobs[type].toString())
-                    println("type 2 " + type)
                     stage("Running $type") {
-                        sh "env"
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
@@ -38,6 +32,7 @@ timeout(60) {
                 }
             }
             parallel jobs
+
         } finally {
 
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
@@ -51,19 +46,11 @@ timeout(60) {
                 }
             }
 
-            //копирование артефактов, selector - выборка джобы - получение последней выполненной,
-            //optional - если не найдет артефакт, то стейдж не зафейлит
+            //копирование артефактов
             stage("Copy allure reports") {
                 dir("allure-results") {
                     for (type in testType) {
-
-                        sh "pwd"
                         sh "cp /root/" + type.replace("-tests", '') + "-allure/* ."
-//                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
-//                        sh "ls -a"
-//                        sh "unzip ./allure-report.zip -d ."
-//                        sh "rm -rf ./allure-report.zip"
-                        sh "ls -a"
                     }
                 }
             }

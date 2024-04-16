@@ -7,18 +7,15 @@
       - build-discarder:
           num-to-keep: 10
     parameters:
+      - text:
+          name: YAML_CONFIG
+          default: |
+            PLATFORM_NAME: android
+            PLATFORM_VERSION: 5.1
       - string:
           name: BRANCH
           default: main
-          description: Branch for tempest barbican MOBILE tests
-      - string:
-          name: PLATFORM_NAME
-          default: android
-          description: Platform name
-      - string:
-          name: PLATFORM_VERSION
-          default: 5.1
-          description: Mobile device version
+          description: Branch for MOBILE tests
     pipeline-scm:
       scm:
         - git-mobile-tests
