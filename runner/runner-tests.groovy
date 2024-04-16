@@ -29,12 +29,12 @@ timeout(60) {
                 jobs[type] = {
                     println("jobs[type] " + jobs[type].toString())
                     println("type 2 " + type)
-                    //stage("Running $type") {
+                    stage("Running $type") {
                         sh "env"
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
-                    //}
+                    }
                 }
             }
             parallel jobs
