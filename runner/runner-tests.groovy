@@ -23,20 +23,21 @@ timeout(60) {
         //объекты джоб
         try {
             println("testType " + testType)
-            for (type in testType) {
+            //for (type in testType) {
+            testType.each {type ->
                 println("type " + type)
                 jobs[type] = {
-                    println("jobs[type] " + jobs[type])
+                    println("jobs[type] " + jobs[type].toString())
                     println("type 2 " + type)
-                    stage("Running $type") {
+                    //stage("Running $type") {
                         sh "env"
                         build(job: "$type", parameters: [
                                 text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
                         ])
-                    }
+                    //}
                 }
-                parallel jobs
             }
+            parallel jobs
         } finally {
 
             //формирование environments.txt - это файл, в котором рисуется environment (переменные окружения)
@@ -55,8 +56,9 @@ timeout(60) {
             stage("Copy allure reports") {
                 dir("allure-results") {
                     for (type in testType) {
+
                         sh "pwd"
-                        sh "cp /root/" + type + "-allure/* ."
+                        sh "cp /root/" + type.replace("-tests", '') + "-allure/* ."
 //                        copyArtifacts filter: "allure-report.zip", projectName: type, selector: lastSuccessful(), optional: true
 //                        sh "ls -a"
 //                        sh "unzip ./allure-report.zip -d ."
