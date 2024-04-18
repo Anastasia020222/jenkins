@@ -10,7 +10,7 @@
       - text:
           name: YAML_CONFIG
           default: |
-            BASE_SELENOID_URL: http://172.30.207.187/wb/hub
+            BASE_SELENOID_URL: http://172.30.207.187/wd/hub
             BASE_URL: https://otus.ru
             BROWSER: chrome
             VERSION_BROWSER: 121.0
