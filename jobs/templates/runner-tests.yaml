@@ -13,7 +13,7 @@
       - text:
           name: YAML_CONFIG
           default: |
-            BASE_SELENOID_URL: http://172.30.207.187:8080/wb/hub
+            BASE_SELENOID_URL: http://172.30.207.187/wb/hub
 
             ui-tests:
             BASE_URL: https://otus.ru
@@ -26,7 +26,7 @@
 
             mobile-tests:
             PLATFORM_NAME: android
-            PLATFORM_VERSION: 5.1
+            PLATFORM_VERSION: 8.1
       - string:
           name: BRANCH
           default: main
