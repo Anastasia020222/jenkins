@@ -1,17 +1,6 @@
 version: '3.7'
 
 services:
-  nginx:
-    privileged: true
-    restart: always
-    image: nginx:latest
-    container_name: nginx
-    hostname: nginx
-    depends_on:
-      - jenkins
-    volumes:
-      - /home/vboxuser/jenkins/nginx:/etc/nginx/conf.d:ro
-
   registry:
     image: registry
     restart: always
