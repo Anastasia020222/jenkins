@@ -18,7 +18,7 @@ services:
     hostname: jenkins
     user: root
     ports:
-      - "8090:8080"
+      - "8091:8080"
     environment:
       - JAVA_OPTS="-Dhudson.model.DownloadService.noSignatureCheck=true"
       - DOCKER_HOST=unix:///var/run/docker.sock
