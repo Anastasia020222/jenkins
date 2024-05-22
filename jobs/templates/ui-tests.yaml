@@ -10,7 +10,7 @@
       - text:
           name: YAML_CONFIG
           default: |
-            REMOTE_URL: http://172.30.207.187/wd/hub
+            REMOTE_URL: http://172.25.7.203//wd/hub
             BASE_URL: https://otus.ru
             BROWSER: chrome
             VERSION_BROWSER: 121.0
