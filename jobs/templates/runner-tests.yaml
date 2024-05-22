@@ -13,12 +13,13 @@
       - text:
           name: YAML_CONFIG
           default: |
-            REMOTE_URL: http://172.25.7.203//wd/hub
+            REMOTE_URL: http://172.25.7.203/wd/hub
 
             ui-tests:
             BASE_URL: https://otus.ru
             BROWSER: chrome
             VERSION_BROWSER: 121.0
+            REMOTE: true
 
             api-tests:
             BASE_API_URL: https://petstore.swagger.io/v2
