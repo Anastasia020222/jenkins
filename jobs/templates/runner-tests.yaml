@@ -13,7 +13,7 @@
       - text:
           name: YAML_CONFIG
           default: |
-            BASE_SELENOID_URL: http://172.30.207.187/wd/hub
+            REMOTE_URL: http://172.25.7.203//wd/hub
 
             ui-tests:
             BASE_URL: https://otus.ru
@@ -22,7 +22,7 @@
 
             api-tests:
             BASE_API_URL: https://petstore.swagger.io/v2
-            WIREMOCK_URL: http://172.30.207.187:8091
+            WIREMOCK_URL: http://172.25.7.203:8091
 
             mobile-tests:
             PLATFORM_NAME: android

@@ -10,7 +10,7 @@
       - text:
           name: YAML_CONFIG
           default: |
-            BASE_SELENOID_URL: http://172.30.207.187/wd/hub
+            REMOTE_URL: http://172.25.7.203//wd/hub
             PLATFORM_NAME: android
             PLATFORM_VERSION: 8.1
       - string:
